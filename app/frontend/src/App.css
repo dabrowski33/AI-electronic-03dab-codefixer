@@ -1,0 +1,32 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background-color: var(--color-bg-light);
+}
+
+.app-main {
+  flex: 1;
+  overflow: hidden;
+  padding-top: var(--header-height);
+}
+
+.chat-layout {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 24px;
+}
+
+.chat-area {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 900px;
+  height: 100%;
+  gap: 16px;
+}
+
+.input-area {
+  flex-shrink: 0;
+}

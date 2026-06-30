@@ -1,0 +1,131 @@
+.message-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-width: 85%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  position: relative;
+}
+
+.message-bubble.user {
+  align-self: flex-end;
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+  border-bottom-right-radius: var(--radius-xs);
+}
+
+.message-bubble.assistant {
+  align-self: flex-start;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-navy);
+  box-shadow: var(--shadow-sm);
+  border-bottom-left-radius: var(--radius-xs);
+}
+
+.message-role {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.message-bubble.user .message-role {
+  color: var(--color-gold);
+}
+
+.message-bubble.assistant .message-role {
+  color: var(--color-text-muted);
+}
+
+.message-content {
+  font-size: 15px;
+  line-height: 1.6;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.message-bubble.user .message-content {
+  color: #FFFFFF;
+}
+
+.text-content {
+  display: inline;
+}
+
+.code-block {
+  position: relative;
+  background-color: var(--color-bg-light);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  margin: 8px 0;
+  overflow: hidden;
+}
+
+.message-bubble.user .code-block {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.code-lang {
+  padding: 4px 12px;
+  background-color: var(--color-navy);
+  color: var(--color-gold);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.code-block pre {
+  padding: 14px;
+  overflow-x: auto;
+}
+
+.code-block code {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+.copy-btn {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  padding: 3px 8px;
+  background-color: var(--color-navy);
+  color: #FFFFFF;
+  border: none;
+  border-radius: var(--radius-xs);
+  font-size: 11px;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.code-block:hover .copy-btn {
+  opacity: 1;
+}
+
+.message-time {
+  font-size: 11px;
+  color: var(--color-text-muted);
+  align-self: flex-end;
+  margin-top: 2px;
+}
+
+.message-bubble.user .message-time {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes blink-cursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.cursor-blink {
+  animation: blink-cursor 0.8s infinite;
+  color: var(--color-blue);
+}

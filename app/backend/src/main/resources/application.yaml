@@ -29,3 +29,20 @@ app:
   image:
     max-long-edge: 1024
     jpeg-quality: 0.85
+---
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:${POSTGRES_PORT:5432}/${POSTGRES_DB:codefixer}
+    username: ${POSTGRES_USER:codefixer}
+    password: ${POSTGRES_PASSWORD:codefixer}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        default_schema: public

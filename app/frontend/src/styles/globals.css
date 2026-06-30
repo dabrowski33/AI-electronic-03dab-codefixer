@@ -1,0 +1,70 @@
+/* NBP Design System — CodeFixer AI */
+:root {
+  --color-navy: #152E52;
+  --color-navy-dark: #0d1f38;
+  --color-blue: #4A74B0;
+  --color-gold: #BDAD7D;
+  --color-gold-dark: #a8974a;
+  --color-bg: #FFFFFF;
+  --color-bg-light: #F7F7F7;
+  --color-text-primary: #464646;
+  --color-text-heading: #152E52;
+  --color-text-muted: #717171;
+  --color-border: #BFCEDD;
+  --color-border-muted: #C4C4C4;
+  --color-error: #C0392B;
+  --color-success: #2E7D32;
+  --color-overlay: rgba(21, 46, 82, 0.6);
+
+  --font-heading: "Brygada 1918", Georgia, "Times New Roman", serif;
+  --font-body: "Libre Franklin", -apple-system, BlinkMacSystemFont, Arial, "Noto Sans", sans-serif;
+  --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+
+  --shadow-sm: 0 1px 3px rgba(21, 46, 82, 0.08);
+  --shadow-md: 0 2px 8px rgba(21, 46, 82, 0.12);
+
+  --header-height: 64px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  color: var(--color-text-heading);
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+button {
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+textarea, input, select {
+  font-family: var(--font-body);
+}
+
+code, pre {
+  font-family: var(--font-mono);
+}

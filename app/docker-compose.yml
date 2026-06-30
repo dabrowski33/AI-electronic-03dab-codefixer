@@ -1,0 +1,96 @@
+version: "3.9"
+
+services:
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: codefixer-postgres
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-codefixer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-codefixer}
+      POSTGRES_DB: ${POSTGRES_DB:-codefixer}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-codefixer}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  agent:
+    build:
+      context: ./agent
+      dockerfile: Dockerfile
+    container_name: codefixer-agent
+    ports:
+      - "8000:8000"
+    environment:
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-nousresearch/hermes-3-llama-3.1-405b}
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      OPENAI_MODEL: ${OPENAI_MODEL:-gpt-4o}
+      PORT: "8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  gateway:
+    build:
+      context: ./gateway
+      dockerfile: Dockerfile
+    container_name: codefixer-gateway
+    ports:
+      - "3001:3001"
+    environment:
+      PORT: "3001"
+      AGENT_URL: http://agent:8000
+      FRONTEND_URL: http://frontend:5173
+      NODE_ENV: production
+    depends_on:
+      agent:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: codefixer-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_PROFILES_ACTIVE: postgres
+      POSTGRES_HOST: postgres
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: ${POSTGRES_DB:-codefixer}
+      POSTGRES_USER: ${POSTGRES_USER:-codefixer}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-codefixer}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      OPENROUTER_BASE_URL: ${OPENROUTER_BASE_URL:-https://openrouter.ai/api/v1}
+    depends_on:
+      postgres:
+        condition: service_healthy
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: codefixer-frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - gateway
+    environment:
+      VITE_API_URL: http://gateway:3001
+
+volumes:
+  postgres_data:
